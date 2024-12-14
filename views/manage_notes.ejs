@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notes App - Заметки</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+    <a href="/">Назад на главную страницу</a>
+    <h1>Управление заметками</h1>
+    
+    <h2>Добавить новую заметку</h2>
+    <form action="/notes" method="POST">
+        <label for="user_id">Пользователь:</label>
+        <select name="user_id" required>
+            <% users.forEach(user => { %>
+                <option value="<%= user._id %>"><%= user.name %></option>
+            <% }); %>
+        </select>
+        
+        <label for="category_id">Категория:</label>
+        <select name="category_id" required>
+            <% categories.forEach(category => { %>
+                <option value="<%= category._id %>"><%= category.name %></option>
+            <% }); %>
+        </select>
+        
+        <label for="note_content">Текст заметки:</label>
+        <textarea name="content" required></textarea>
+        
+        <button type="submit">Добавить</button>
+    </form>
+    
+    <h2>Список заметок в системе</h2>
+    <ul>
+        <% notes.forEach(note => { %>
+            <li>
+                <strong><%= note.user_name %></strong> в категории <em><%= note.category_name %></em>: <%= note.content %>
+                <a href="/notes/<%= note._id %>/edit" class="button">Изменить</a> 
+
+                <form action="/notes/<%= note._id %>/delete" method="POST" style="display: inline;">
+                    <button type="submit">Удалить</button>
+                </form>
+            </li>
+        <% }); %>
+    </ul>
+</body>
+</html>

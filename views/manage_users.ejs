@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notes App - Пользователи</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+    <a href="/">Назад на главную страницу</a>
+    <h1>Управление пользователями</h1>
+    
+    <h2>Добавить нового пользователя</h2>
+    <form action="/users" method="POST">
+        <label for="user_name">Имя:</label>
+        <input type="text" name="name" required>
+        <label for="user_email">Email:</label>
+        <input type="email" name="email" required>
+        <button type="submit">Добавить</button>
+    </form>
+    
+    <h2>Список пользователей в системе</h2>
+    <ul>
+        <% users.forEach(user => { %>
+            <li>
+                <strong><%= user.name %></strong> (<%= user.email %>)
+                <a href="/users/<%= user._id %>/edit" class="button">Изменить</a>              
+                <form action="/users/<%= user._id %>/delete" method="POST" style="display: inline;">
+                    <button type="submit">Удалить</button>
+                </form>
+            </li>
+        <% }); %>
+    </ul>
+</body>
+</html>

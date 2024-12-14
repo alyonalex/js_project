@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Редактировать заметку</title>
+</head>
+<body>
+    <h1>Редактировать заметку</h1>
+    <form action="/notes/<%= note._id %>/edit" method="POST">
+        <label for="content">Содержание:</label>
+        <textarea id="content" name="content" required><%= note.content %></textarea>
+        <label for="category_id">Категория:</label>
+        <select id="category_id" name="category_id">
+            <% categories.forEach(category => { %>
+                <option value="<%= category._id %>" <%= category._id.equals(note.category_id) ? 'selected' : '' %>>
+                    <%= category.name %>
+                </option>
+            <% }) %>
+        </select>
+        <button type="submit">Сохранить</button>
+    </form>
+</body>
+</html>
+

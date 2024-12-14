@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notes App - Категории</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+    <a href="/users">Управление пользователями</a> |
+    <a href="/categories">Управление категориями</a> |
+    <a href="/notes">Управление заметками</a>
+    <h1>Добро пожаловать в систему персональных заметок</h1>
+    
+    <h2>Статистика пользователей</h2>
+    <ul>
+        <% statistics.user_statistics.forEach(userStat => { %>
+            <li>
+                <strong><%= userStat.user_name %></strong>: <%= userStat.notes_count %> заметок
+            </li>
+        <% }); %>
+    </ul>
+
+
+    <!-- <h2>Статистика пользователей</h2>
+    <ul>
+        <% if (statistics && statistics.user_statistics) { %>
+            <% statistics.user_statistics.forEach(userStat => { %>
+                <li><strong><%= userStat.user_name %></strong>: <%= userStat.notes_count %> заметок</li>
+            <% }); %>
+        <% } else { %>
+            <li>Статистика отсутствует</li>
+        <% } %>
+    </ul> -->
+
+    <h2>Фильтр для заметок</h2>
+    <form method="GET" action="/">
+        <label for="user_id">Пользователь:</label>
+        <select name="user_id" id="user_id">
+            <option value="">Все пользователи</option>
+            <% users.forEach(user => { %>
+                <option value="<%= user._id %>" <%= user._id.toString() === (user_id || '') ? 'selected' : '' %>>
+                    <%= user.name %>
+                </option>
+            <% }); %>
+        </select>
+        
+        <label for="category_id">Категория:</label>
+        <select name="category_id" id="category_id">
+            <option value="">Все категории</option>
+            <% categories.forEach(category => { %>
+                <option value="<%= category._id %>" <%= category._id.toString() === (category_id || '') ? 'selected' : '' %>>
+                    <%= category.name %>
+                </option>
+            <% }); %>
+        </select>
+
+        <label for="sort_by">Сортировать по:</label>
+        <select name="sort_by" id="sort_by">
+            <option value="user" <%= sort_by === 'user' ? 'selected' : '' %>>Пользователю</option>
+            <option value="category" <%= sort_by === 'category' ? 'selected' : '' %>>Категории</option>
+        </select>
+
+        <button type="submit">Применить</button>
+    </form>
+
+    <h2>Заметки</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Пользователь</th>
+                <th>Категория</th>
+                <th>Содержимое</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% notes.forEach(note => { %>
+                <tr>
+                    <td><%= note.user_name %></td>
+                    <td><%= note.category_name %></td>
+                    <td><%= note.content %></td>
+                </tr>
+            <% }); %>
+        </tbody>
+    </table>
+</body>
+</html>
+

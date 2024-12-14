@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notes App - Категории</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+    <a href="/">Назад на главную страницу</a>
+    <h1>Управление категориями</h1>
+    
+    <h2>Добавить новую категорию</h2>
+    <form action="/categories" method="POST">
+        <label for="category_name">Название категории:</label>
+        <input type="text" name="name" required>
+        <button type="submit">Добавить</button>
+    </form>
+    
+    <h2>Список категорий в системе</h2>
+    <ul>
+        <% categories.forEach(category => { %>
+            <li>
+                <strong><%= category.name %></strong>
+                <a href="/categories/<%= category._id %>/edit" class="button">Изменить</a>  
+
+                <form action="/categories/<%= category._id %>/delete" method="POST" style="display: inline;">
+                    <button type="submit">Удалить</button>
+                </form>
+            </li>
+        <% }); %>
+    </ul>
+</body>
+</html>
